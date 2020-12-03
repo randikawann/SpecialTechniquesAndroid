@@ -35,8 +35,6 @@
 
         </LinearLayout>
 
-
-
         <ImageView
             android:layout_marginRight="5dp"
             android:src="@drawable/call"

@@ -4,9 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Adapter;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.rancreation.specialtechniquesandroid.Adapter.UserAdapter;
@@ -27,11 +30,14 @@ import static android.widget.Toast.LENGTH_LONG;
 public class MainActivity extends AppCompatActivity {
 
     private String BASE_URL = "https://jsonplaceholder.typicode.com/";
+
     public UserService mService;
 
     RecyclerView userRecyclerview;
     UserAdapter userAdapter;
 
+    public static ProgressDialog mProgressDialog;
+    public static ProgressBar progressbar;
 
 
     @Override
@@ -42,15 +48,28 @@ public class MainActivity extends AppCompatActivity {
         Log.i("12345","on create");
 
         userRecyclerview = findViewById(R.id.usersrecyclerview);
+        progressbar = findViewById(R.id.progressbar);
 
 
         mService = UserViewModel.getusers(BASE_URL);
+
+        /*
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
+        mProgressDialog.setContentView(R.layout.activity_main);
+        this.getWindow().setBackgroundDrawableResource(
+                android.R.color.transparent
+        );
+*/
 
         getAllusers();
 
 
 
     }
+
+
 
     private void getAllusers(){
 
@@ -76,10 +95,8 @@ public class MainActivity extends AppCompatActivity {
     public void handleRecyclerview(List<User> alluser){
 
         userRecyclerview.setLayoutManager(new LinearLayoutManager(this));
-        userAdapter = new UserAdapter(alluser);
+        userAdapter = new UserAdapter(alluser, this);
         userRecyclerview.setAdapter(userAdapter);
-
-//        userAdapter = new UserAdapter(alluser);
 
     }
 }
