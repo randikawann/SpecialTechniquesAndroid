@@ -1,5 +1,32 @@
 # SpecialTechniquesAndroid
 
+## 5. Action Bar.  ----> Formating
+Action bar set right handside button
+
+### actionbar_menu.xml.  --> menu
+```
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/new_game"
+          android:icon="@drawable/ic_new_game"
+          android:title="@string/new_game"
+          android:showAsAction="ifRoom"/>
+    <item android:id="@+id/help"
+          android:icon="@drawable/ic_help"
+          android:title="@string/help" />
+</menu>
+```
+### MainActivity.java
+```
+@Override
+public boolean onCreateOptionsMenu(Menu menu) {
+    MenuInflater inflater = getMenuInflater();
+    inflater.inflate(R.menu.game_menu, menu);
+    return true;
+}
+```
+
+
 ## 4. Tab View
 here Attached the simple  three tab view for activity
 ### activity_main3.xml
