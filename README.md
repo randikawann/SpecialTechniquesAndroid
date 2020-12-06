@@ -1,6 +1,6 @@
 # SpecialTechniquesAndroid
 
-## Tab View
+## 4. Tab View
 here Attached the simple  three tab view for activity
 ### activity_main3.xml
 ```
@@ -155,7 +155,7 @@ Finaly attached the three fragmemnt to the activity. and link them with Page Ada
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
-## Navigation View
+## 3. Navigation View
 Here Attached the navigation view to android application
 ### main_acivity2.xml --> in main layout
 ```
@@ -323,7 +323,7 @@ public class MainActivity2 extends AppCompatActivity {
 ```
 ------------------------------------------------------------------------------------------------------------------------------------------
 
-## Recycler view added
+## 2. Recycler view 
 
 ### activity_main
 ```
@@ -509,7 +509,7 @@ public class MainActivity extends AppCompatActivity {
 ```
 ------------------------------------------------------------------------------------------------------------------------------------------
 
-## Retrofit for data retrieving
+## 1. Retrofit for data retrieving
 ### MainActivity
 ```
 public class MainActivity extends AppCompatActivity {
