@@ -152,6 +152,7 @@ public class PageAdapter extends FragmentPagerAdapter {
 
 ```
 Finaly attached the three fragmemnt to the activity. and link them with Page Adapter.
+
 ------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Navigation View
