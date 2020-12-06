@@ -1,5 +1,159 @@
 # SpecialTechniquesAndroid
 
+## Tab View
+here Attached the simple  three tab view for activity
+### activity_main3.xml
+```
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity3">
+
+    <com.google.android.material.tabs.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tabLayout">
+
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/tab1"
+            android:text="Chat"/>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/tab2"
+            android:text="Status"/>
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/tab3"
+            android:text="Call"/>
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/vpage"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+```
+### MainActivity3.java
+```
+package com.rancreation.specialtechniquesandroid;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
+import android.os.Bundle;
+
+import com.google.android.material.tabs.TabItem;
+import com.google.android.material.tabs.TabLayout;
+import com.rancreation.specialtechniquesandroid.Adapter.PageAdapter;
+
+public class MainActivity3 extends AppCompatActivity {
+
+    TabLayout tabLayout;
+    TabItem tabItem1, tabItem2, tabItem3;
+    ViewPager viewPager;
+    PageAdapter pageAdapter;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main3);
+
+        tabLayout = findViewById(R.id.tabLayout);
+        tabItem1 = findViewById(R.id.tab1);
+        tabItem2 = findViewById(R.id.tab2);
+        tabItem3 = findViewById(R.id.tab3);
+        viewPager = findViewById(R.id.vpage);
+
+        pageAdapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(pageAdapter);
+
+
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+
+                if (tab.getPosition()==0 || tab.getPosition()==1 || tab.getPosition()==2){
+                    pageAdapter.notifyDataSetChanged();
+                }
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        //listn for scroll or page change
+
+
+    }
+}
+```
+### PageAdapter.java
+managing fragments
+```
+package com.rancreation.specialtechniquesandroid.Adapter;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+
+import com.rancreation.specialtechniquesandroid.FirstFragment;
+import com.rancreation.specialtechniquesandroid.SecondFragment;
+import com.rancreation.specialtechniquesandroid.ThirdFragment;
+
+public class PageAdapter extends FragmentPagerAdapter {
+
+    int tabcount;
+
+
+    public PageAdapter(@NonNull FragmentManager fm, int behavior) {
+        super(fm, behavior);
+        tabcount = behavior;
+    }
+
+    @NonNull
+    @Override
+    public Fragment getItem(int position) {
+
+        switch (position){
+            case 0: return new FirstFragment();
+            case 1: return new SecondFragment();
+            case 2: return new ThirdFragment();
+            default: return null;
+        }
+    }
+
+    @Override
+    public int getCount() {
+        return tabcount;
+    }
+}
+
+```
+Finaly attached the three fragmemnt to the activity. and link them with Page Adapter.
+------------------------------------------------------------------------------------------------------------------------------------------
+
 ## Navigation View
 Here Attached the navigation view to android application
 ### main_acivity2.xml --> in main layout
@@ -166,7 +320,7 @@ public class MainActivity2 extends AppCompatActivity {
 
 </resources>
 ```
-
+------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Recycler view added
 
@@ -352,6 +506,7 @@ public class MainActivity extends AppCompatActivity {
     }
 }
 ```
+------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Retrofit for data retrieving
 ### MainActivity
