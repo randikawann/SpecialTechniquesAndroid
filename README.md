@@ -1,5 +1,173 @@
 # SpecialTechniquesAndroid
 
+## Navigation View
+Here Attached the navigation view to android application
+### main_acivity2.xml --> in main layout
+```
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/drawer"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity2">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/toolbar"
+            app:title="Pay ME"
+            android:background="#008000"/>
+        
+    </RelativeLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:layout_gravity="start"
+        android:id="@+id/navmenu"
+        app:menu="@menu/menu"
+        app:headerLayout="@layout/nav_header"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="csjdcksjcn"
+            android:gravity="center" />
+    </RelativeLayout>
+
+
+
+
+</androidx.drawerlayout.widget.DrawerLayout>
+```
+### menu.xml
+menu.xml  -> menu folder
+```
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/home"
+        android:icon="@drawable/ic_launcher_background"
+        android:title="Home" />
+
+    <item android:id="@+id/setting"
+        android:icon="@drawable/ic_launcher_background"
+        android:title="Settings" />
+
+    <item android:id="@+id/call"
+        android:icon="@drawable/ic_launcher_background"
+        android:title="Call" />
+
+</menu>
+```
+### nav_header.xml
+nav_header.xml --> layout
+```
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_launcher_background" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Navigation Header"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+```
+### MainActivity2.java
+MainActivty2.java -> main activtity
+
+```
+package com.rancreation.specialtechniquesandroid;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+
+import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
+
+import com.google.android.material.navigation.NavigationView;
+
+public class MainActivity2 extends AppCompatActivity {
+
+    NavigationView nav;
+    ActionBarDrawerToggle toggle;
+    DrawerLayout drawerLayout;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main2);
+
+        Toolbar toolbar =  findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        nav = findViewById(R.id.navmenu);
+        drawerLayout = findViewById(R.id.drawer);
+
+        toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawr, R.string.close_drawr);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+        nav.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch (item.getItemId()){
+                    case R.id.home:
+                        Log.i("1234", "home clicked");
+                    case R.id.setting:
+                        Log.i("1234", "setting clicked");
+                    case R.id.call:
+                        Log.i("1234", "call clicked");
+                }
+
+                return true;
+            }
+        });
+
+    }
+}
+```
+### strings.xml
+```
+<resources>
+    <string name="app_name">SpecialTechniquesAndroid</string>
+
+    <string name="open_drawr">Open Drawer</string>
+    <string name="close_drawr">Close Drawer</string>
+
+</resources>
+```
+
+
 ## Recycler view added
 
 ### activity_main
