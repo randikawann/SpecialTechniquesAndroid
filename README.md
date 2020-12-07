@@ -25,6 +25,29 @@ try {
       e.printStackTrace();
         }
 ```
+covert stream use to convert json string 
+```
+public static String convertStreamToString(InputStream inputStream) {
+        BufferedReader bufferedReader;
+        bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        StringBuilder stringBuilder = new StringBuilder();
+        String line;
+        try {
+            while ((line = bufferedReader.readLine()) != null) {
+                stringBuilder.append(line + "\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return stringBuilder.toString();
+    }
+```
 
 ## 2. Get request API:
 
