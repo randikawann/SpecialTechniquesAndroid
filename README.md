@@ -25,6 +25,10 @@ private void viewValues(Response response) {
 
         }
 ```
+another way to show string value... it is more usefull in userAdapter
+```
+String username = propertyArray.getJSONObject(position).getString("first_name");
+```
 glide dependencies
 ```
 //glide
