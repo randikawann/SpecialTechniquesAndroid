@@ -1,5 +1,79 @@
 # Arimac Test important things
 
+## 2. Get request API:
+
+### Response handle jsonobjects
+```
+private void viewValues(Response response) {
+
+        try{
+            JSONObject jsonObject = new JSONObject(response.getResponseBody());
+            Log.i("1234", "Json object "+jsonObject); // Json object {"page":1,"per_page":6,"total":12,"total_pages":2,"data":[{"i ...
+            JSONArray propertyArray = jsonObject.getJSONArray("data");
+            Log.i("1234", "object array "+propertyArray); // object array [{"id":1,"email":"george.bluth@reqres.in","first_name":"Georg ...
+            JSONObject single_person = propertyArray.getJSONObject(0);
+            Log.i("1234", "Single person "+single_person); // Single person {"id":1,"email":"george.bluth@reqres.in","first_name":"Georg
+            String email = single_person.getString("email");
+            Log.i("1234", "email "+email); // email george.bluth@reqres.in
+            String imageString = single_person.getString("avatar");
+            Log.i("1234", "image string "+imageString); // image string https://reqres.in/img/faces/1-image.jpg
+
+            Glide.with(this).load(imageString).into(imageview); //view image using glide and update image view
+            
+        }catch (JSONException jsonException){
+            Log.i("1234", "JSON expression "+jsonException);
+
+        }
+```
+glide dependencies
+```
+//glide
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+```
+
+### somecomplex get request handle
+
+```
+private void getProfile() {
+        try {
+            Request request = new Request(Endpoints.GET_PROFILE, Request.Method.GET);
+            RestClient client = new RestClient(this, request, new ResponseCallback() {
+                @Override
+                public void onResponseReceive(Response response) {
+                    onGetProfileComplete(response);
+                }
+            });
+
+            client.execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+```
+### Response handle
+```
+private void onGetProfileComplete(Response response) {
+        app.getSettings().setProfileData(response.getResponseBody()); // Call Application activity to save fetch data
+        JSONObject jsonProfileDataObject = null;
+        try {
+                jsonProfileDataObject = new JSONObject(new Settings(this).getProfileData());
+                app.setMe(JSONParser.parseUser(jsonProfileDataObject));  // Pass objects to app Application activity
+                JSONObject object = new JSONObject(response.getResponseBody());
+                JSONObject objectData = object.getJSONObject("data");
+                JSONObject objectUser = objectData.getJSONObject("user");
+                propertyListArray = objectUser.getJSONArray("propertyList");
+                
+        } catch (JSONException e) {
+                e.printStackTrace();
+        } catch (Exception e) {
+                e.printStackTrace();
+        }
+
+}
+```
+
+
 ## 1. Get and Post URL:
 ### Add permission for android manifest
 ```
