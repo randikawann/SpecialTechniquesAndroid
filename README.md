@@ -1,5 +1,31 @@
 # Arimac Test important things
 
+## 3. Get Data from 
+
+get data from json file as input 
+```
+try {
+            InputStream inputStream = getAssets().open("editDeviceType.json");
+            String data = convertStreamToString(inputStream);
+            JSONArray jsonArray = new JSONArray(data);
+            int count = jsonArray.length();
+            editDeviceTypeList = new ArrayList<>();
+            for (int i = 0; i < count; i++) {
+                EditDeviceType editDeviceType = new EditDeviceType();
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                editDeviceType.setId(jsonObject.getInt("id"));
+                editDeviceType.setDeviceTypeCode(jsonObject.getString("deviceTypeCode"));
+                editDeviceType.setDeviceTypeName(jsonObject.getString("deviceTypeName"));
+                editDeviceType.setDeviceTypeImage(jsonObject.getString("image"));
+                editDeviceTypeList.add(editDeviceType);
+            }
+            editDeviceTypeAdapter = new EditDeviceTypeAdapter(this, this, editDeviceTypeList);
+            recyclerView.setAdapter(editDeviceTypeAdapter);
+     }catch(Exception e){
+      e.printStackTrace();
+        }
+```
+
 ## 2. Get request API:
 
 ### Response handle jsonobjects
