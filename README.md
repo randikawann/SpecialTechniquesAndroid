@@ -1,6 +1,152 @@
 # Arimac Test important things
 
-## 3. Get Data from 
+## 4. Recycler View ONclickedLisner
+most of time recycler view on clicked data should be access with activity file. but it is very dificult to handle in apater. thatswhy onclicked listner can be easily use to that.
+### UserAdapter.java
+```
+package com.rancreation.arimactest;
+
+import android.content.Context;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class UserAdapter extends RecyclerView.Adapter<UserAdapter.UserViewHolder>{
+
+    JSONArray propertyArray;
+    JSONObject singleproperty;
+    Context context;
+    ItemClickListener itemClickListener;
+    
+// 2. Change the constructer with ItemClickListner parameter
+    public UserAdapter(JSONArray propertyArray, Context context, ItemClickListener itemClickListener) {
+        this.propertyArray = propertyArray;
+        this.context = context;
+        this.itemClickListener = itemClickListener;
+    }
+
+
+// 1. Add interface according to needed value to MainActivity
+    interface ItemClickListener {
+        void onItemClick(int position, JSONObject product);
+    }
+    @Override
+    public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_card, parent, false);
+        return new UserViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
+
+        try {
+            String username = propertyArray.getJSONObject(position).getString("first_name");
+            String userEmail = propertyArray.getJSONObject(position).getString("email");
+            String usrimage = propertyArray.getJSONObject(position).getString("avatar");
+            
+
+            holder.userName.setText(username);
+            holder.userEmail.setText(userEmail);
+            Glide.with(context).load(usrimage).into(holder.userimage);
+
+//          3. Added the onclicklistner in holder.
+            holder.usercardxml.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    singleproperty = null;
+                    try {
+                        singleproperty = propertyArray.getJSONObject(position);
+                    } catch (JSONException jsonException) {
+                        jsonException.printStackTrace();
+                    }
+//           4. Added interface attribute using itemClickLister
+                    itemClickListener.onItemClick(position, singleproperty);
+                }
+            });
+
+        } catch (JSONException jsonException) {
+            jsonException.printStackTrace();
+        }
+
+
+
+    }
+
+    @Override
+    public int getItemCount() {
+        return propertyArray.length();
+    }
+
+    class UserViewHolder extends RecyclerView.ViewHolder{
+        TextView userName;
+        TextView userName2;
+        TextView userEmail;
+        ImageView userimage;
+        LinearLayout usercardxml;
+
+        public UserViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            userName = itemView.findViewById(R.id.user_name);
+            userEmail = itemView.findViewById(R.id.user_email);
+            userimage = itemView.findViewById(R.id.user_image);
+            usercardxml = itemView.findViewById(R.id.usercardxml);
+
+
+        }
+    }
+
+}
+
+```
+## MainActivity.java changers
+
+remove unnessary code from this... 
+```
+//          6. change the impletmentation method (auto access with changing adapter paramter)
+public class MainActivity extends AppCompatActivity implements UserAdapter.ItemClickListener {
+
+    private String BASE_URL = "https://reqres.in/api/users";
+
+    RecyclerView userRecyclerview;
+    UserAdapter userAdapter;
+    
+
+    private void setupRecyclerView(JSONArray propertyArray) {
+
+        userRecyclerview.setLayoutManager(new LinearLayoutManager(this));
+  
+  //          5. changing parameters according to the last value "this" -> indicate onclicklistnter
+        userAdapter = new UserAdapter(propertyArray, this, this);
+        userRecyclerview.setAdapter(userAdapter);
+    }
+    
+    
+//          7. added new onItemClick method. as new implementation
+    @Override
+    public void onItemClick(int position, JSONObject product) {
+        Log.i("1234", "Clicked item: "+position+ "value "+product);
+
+    }
+    
+
+}
+```
+
+## 3. Get Data from json file
 
 get data from json file as input 
 ```
